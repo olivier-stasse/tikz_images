@@ -1,0 +1,158 @@
+\documentclass[tikz,border={10pt 60pt 10pt 10pt}]{standalone}
+%
+\usepackage{tikz-network}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{fadings}
+% GLW
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+\tikzset{
+    expand bubble/.style={
+        preaction={draw,line width=5.4pt,dash pattern=on 4pt off 4pt,color=red}, %
+        %blue,fill,draw,color=cyan, dash pattern=on 2pt off 3pt on 4pt off 4pt,
+        preaction={top color=white, bottom color=blue}        
+    },
+  }
+%
+\def\GLWbackground
+{
+  \node (p1) at (1, 5) {};
+  \node (p2) at (0, 0) {};
+  \node (p3) at (1, -5) {};
+  \node (p4) at (5.5, -6) {};  
+  \node (p5) at (12, -5) {};
+  \node (p6) at (11, 0) {};  
+  \node (p7) at (12,  5) {};
+  \begin{pgfonlayer}{background}
+    \path[expand bubble]plot [smooth cycle,tension=1] coordinates {(p1) (p2) (p3) (p4) (p5) (p6) (p7)};
+  \end{pgfonlayer}
+}
+%
+\def\GLWnetwork
+{
+  \Vertex[size=0.75,x=06.0,y=-0.8,color=red,label=A,NoLabel]{A};
+  \Vertex[size=0.75,x=07.0,y=03.0,color=white,label=B,NoLabel]{B};
+  \Vertex[size=0.95,x=08.5,y=-1.0,color=red!60,label=C,NoLabel]{C};
+  \Vertex[size=0.50,x=06.0,y=00.9,color=white,label=D,NoLabel]{D};
+  \Vertex[size=0.75,x=07.0,y=-2.0,color=red,label=E,NoLabel]{E};
+  \Vertex[size=0.95,x=08.0,y=01.0,color=red,label=F,NoLabel]{F};
+  \Vertex[size=0.50,x=02.0,y=01.5,color=red!60,label=G,NoLabel]{G};
+  \Vertex[size=0.75,x=04.0,y=03.0,color=red,label=H,NoLabel]{H};
+  \Vertex[size=0.95,x=05.0,y=-1.0,color=white,label=I,NoLabel]{I};
+  \Vertex[size=0.50,x=03.0,y=01.0,color=red,label=J,NoLabel]{J};
+  \Vertex[size=0.75,x=04.5,y=-3.0,color=red,label=K,NoLabel]{K};
+  \Vertex[size=0.95,x=05.0,y=01.0,color=white,label=L,NoLabel]{L};
+  \Vertex[size=1.50,x=05.0,y=05.0,color=red!60,label=M,NoLabel]{M};
+  \Vertex[size=1.75,x=02.5,y=-3.5,color=red!60,label=N,NoLabel]{N};
+  \Vertex[size=0.75,x=11.0,y=-2.5,color=red,label=O,NoLabel]{O};
+  \Vertex[size=0.95,x=10.5,y=01.5,color=white,label=P,NoLabel]{P};
+  \Vertex[size=1.50,x=09.5,y=04.0,color=white,label=Q,NoLabel]{Q};
+  \Vertex[size=1.75,x=08.3,y=-4.0,color=red!60,label=R,NoLabel]{R};
+  \Vertex[size=1.50,x=03.3,y=-1.5,color=white,label=S,NoLabel]{S};
+  %
+  \Edge[lw=3pt](A)(B)
+  \Edge[lw=5pt](A)(E)
+  \Edge[lw=5pt](A)(F)
+  \Edge[lw=5pt](A)(D)    
+  \Edge[lw=5pt](A)(I)    
+  \Edge[lw=3pt](B)(D)
+  \Edge[lw=3pt](B)(F)
+  \Edge[lw=3pt](D)(L)
+  \Edge[lw=3pt](I)(L)
+  \Edge[lw=3pt](J)(G)       
+  \Edge[lw=5pt](E)(F)
+  \Edge[lw=3pt](G)(H)
+  \Edge[lw=5pt](G)(S)
+  \Edge[lw=3pt](H)(L)
+  \Edge[lw=5pt](H)(J)
+  \Edge[lw=3pt](I)(K)
+  \Edge[lw=5pt](K)(E)
+  \Edge[lw=3pt](I)(J)
+  \Edge[lw=5pt](H)(M)
+  \Edge[lw=5pt](M)(B)
+  \Edge[lw=3pt](N)(K)
+  \Edge[lw=5pt](O)(P)
+  \Edge[lw=3pt](C)(F)
+  \Edge[lw=5pt](O)(P)
+  \Edge[lw=3pt](O)(C)    
+  \Edge[lw=5pt](P)(Q)
+  \Edge[lw=3pt](Q)(B)
+  \Edge[lw=3pt](R)(E)
+  \Edge[lw=3pt](R)(K)    
+  \Edge[lw=5pt](I)(S)
+  \Edge[lw=3pt](P)(Q)
+  % Edges for Vertex Language
+  \Edge[lw=3pt](VAELanguage)(Q)
+  \Edge[lw=3pt](VAELanguage)(P)
+  \Edge[lw=3pt](VAELanguage)(F)
+  % Edges for Vertex Vision
+  \Edge[lw=3pt](VAEVision)(G)
+  \Edge[lw=3pt](VAEVision)(N)
+  \Edge[lw=3pt](VAEVision)(S)  
+  % Edges for Vertex Tasks
+  \Edge[lw=3pt](VAETasks)(G)
+  \Edge[lw=3pt](VAETasks)(M)
+  \Edge[lw=3pt](VAETasks)(H)  
+  % Edges for Vertex Robot
+  \Edge[lw=3pt](VAERobot)(O)
+  \Edge[lw=3pt](VAERobot)(R)
+  \Edge[lw=3pt](VAERobot)(C)  
+
+ 
+}
+% Drawing variable encoder
+\newcommand{\variableencoder}[1]{
+  \fill[red] (2.0,0.1) rectangle (3.0,0.6);
+  \fill[red] (2.0,-0.6) rectangle (3.0,-0.1);
+  %
+  \draw[fill=white,line width=2pt] (-0.5,-4.0) rectangle (0.5,4.0);
+  \draw[fill=white,line width=2pt] (0.0,-2.75) rectangle (1.0,2.75);
+  \draw[fill=white,line width=2pt] (0.5,-1.75) rectangle (1.5,1.75);
+  \draw[fill=white,line width=2pt] (1.0,-1.0) rectangle (2.0,1.0);
+  %
+  \draw[fill=white,line width=2pt] (3.0,-1.0) rectangle (4.0,1.0);
+  %
+  \node (#1) at  (3.5,0.0) {};
+}
+%
+\begin{document}
+\begin{tikzpicture}
+  % 
+  \begin{scope}[rotate=0, xshift=-3cm,yshift=0cm]
+    \variableencoder{VAEVision}
+    \node[xshift=-2cm,yshift=0cm,font={\sffamily\fontsize{20pt}{20pt}\selectfont}](0,0)
+    {Vision};
+  \end{scope}
+  %
+  \begin{scope}[xshift=1.5cm,yshift=8.25cm]
+    \begin{scope}[rotate=290]
+      \variableencoder{VAETasks}
+    \end{scope}
+    \node [xshift=-0.5cm,yshift=2cm,
+    font={\sffamily\fontsize{20pt}{20pt}\selectfont}](0,0)
+    {Tasks};
+  \end{scope}
+  %
+  \begin{scope}[xshift=11cm,yshift=-9.5cm]
+    \begin{scope}[rotate=100]
+      \variableencoder{VAERobot}
+    \end{scope}
+    \node [xshift=0cm,yshift=-2cm,
+    font={\sffamily\fontsize{20pt}{20pt}\selectfont}](0,0)
+    {Robot};
+  \end{scope}
+  % 
+  \begin{scope}[xshift=14.5cm,yshift=6.25cm]
+    \begin{scope}[rotate=220
+      ]
+      \variableencoder{VAELanguage}
+    \end{scope}
+    \node [xshift=1cm,yshift=2cm,
+    font={\sffamily\fontsize{20pt}{20pt}\selectfont}](0,0)
+    {Language};    
+  \end{scope}  
+  %
+  \GLWbackground
+  \GLWnetwork
+\end{tikzpicture}
+\end{document}
